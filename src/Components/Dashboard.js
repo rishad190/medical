@@ -6,6 +6,7 @@ import { UserContext } from "../App";
 const Dashboard = () => {
   const [user] = useContext(UserContext);
   const [tasks, setTasks] = useState([]);
+  const [sensorValue, setSensorValue] = useState([]);
 
   useEffect(() => {
     const q = query(collection(db, "user"), orderBy("email", "desc"));
@@ -17,9 +18,21 @@ const Dashboard = () => {
         }))
       );
     });
+    const p = query(collection(db, "sensor"), orderBy("email", "desc"));
+    onSnapshot(p, (querySnapshot) => {
+      setSensorValue(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
   }, []);
   const dataFilter = tasks.filter((task) => task.data.email === user.email);
-  console.log(dataFilter);
+  const sensorFilter = sensorValue.filter(
+    (sensor) => sensor.data.email === user.email
+  );
+  console.log(sensorFilter);
   return (
     <div class="container">
       <div class="row gutters-sm">
@@ -137,24 +150,20 @@ const Dashboard = () => {
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Spo2</th>
+                    <th scope="col">Temperature</th>
+                    <th scope="col">Glucose</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
+                  {sensorFilter?.map((sensor, i) => (
+                    <tr key={sensor.id}>
+                      <th scope="row">{i + 1}</th>
+                      <td>{sensor.data.oxygen}</td>
+                      <td>{sensor.data.temp}</td>
+                      <td>{sensor.data.glucose}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
 

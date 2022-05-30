@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../App";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -76,10 +76,16 @@ const LoginPage = () => {
               />
               <p className="help-block text-danger"></p>
             </div>
-            <div className="mrgn-30-top">
-              <button type="submit" className="btn btn-larger btn-block">
+            <div className="mrgn-30-top d-flex justify-content-between">
+              <button
+                type="submit"
+                className="btn btn-larger btn-block bg-primary text-white"
+              >
                 Log in
               </button>
+              <p>
+                Create New Account <Link to="/signup">Sign Up</Link>
+              </p>
             </div>
           </form>
         </div>

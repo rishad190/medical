@@ -222,7 +222,7 @@ const SignupPage = () => {
                         type="submit"
                         id="submit"
                         name="submit"
-                        className="btn btn-larger btn-block"
+                        className="btn btn-larger btn-block bg-warning"
                       >
                         Sign up
                       </button>
