@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Navbar = () => {
+  const [user, setUser] = useContext(UserContext);
+  const handleSignout = () => {
+    const newUserInfo = { ...user };
+    newUserInfo.error = "";
+    newUserInfo.success = false;
+    newUserInfo.email = "";
+    setUser(newUserInfo);
+  };
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-primary">
@@ -36,11 +45,6 @@ const Navbar = () => {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link text-white" to="/login">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link className="nav-link text-white" to="/dashboard">
                   Dashboard
                 </Link>
@@ -50,6 +54,22 @@ const Navbar = () => {
                   Live Data
                 </Link>
               </li>
+              {user.success ? (
+                <li className="nav-item">
+                  <button
+                    onClick={handleSignout}
+                    className="nav-link text-white bg-primary border-0 "
+                  >
+                    Log Out
+                  </button>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <Link className="nav-link text-white" to="/login">
+                    Login
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

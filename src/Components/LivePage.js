@@ -17,11 +17,15 @@ if (firebase.apps.length === 0) {
 }
 
 let oxygenBox = [];
-let avgOxygen = 0;
-let tempBox = [];
-let avgTemp = 0;
 let glucoseBox = [];
+let tempBox = [];
+let heartBox = [];
+let hbBox = [];
+let avgOxygen = 0;
+let avgTemp = 0;
 let avgGlucose = 0;
+let avgHeart = 0;
+let avgHb = 0;
 const LivePage = () => {
   const [dataValue, setDataValue] = useState({});
   const [tasks, setTasks] = useState([]);
@@ -45,20 +49,12 @@ const LivePage = () => {
       .on("value", (snapshot) => {
         const data = snapshot.val();
         setDataValue(data);
-        // let d = new Date();
-        // let hour = d.getHours();
-        // if (hour > 16 && hour < 23) {
-        //   if (dataValue.power1 > dataValue.power2) {
-        //     alert("Please  Turn OFF Load 1 ");
-        //   } else {
-        //     alert("Please  Turn OFF Load 2");
-        //   }
-        // }
       });
   }, []);
   const rfidFilter = tasks.some((task) => task.data.RFID === dataValue.card);
   const userFilter = tasks.find((task) => task.data.RFID === dataValue.card);
-  console.log(userFilter);
+
+  //  call all function
   const handleOxygenData = () => {
     if (dataValue?.oxygen > 70) {
       oxygenBox.push(dataValue?.oxygen);
@@ -67,16 +63,9 @@ const LivePage = () => {
     }
     avgOxygen =
       oxygenBox.reduce((sum, curr) => sum + Number(curr), 0) / oxygenBox.length;
-    // try {
-    //   firebase.database().ref("/medical/").update({
-    //     oxygenAvg: avgOxygen,
-    //   });
-    // } catch (error) {
-
-    // }
   };
   const handleGlucoseData = () => {
-    if (dataValue?.glucose > 100) {
+    if (dataValue?.glucose > 3) {
       glucoseBox.push(dataValue?.glucose);
     } else {
       console.log("NO Hand");
@@ -86,7 +75,7 @@ const LivePage = () => {
       glucoseBox.length;
   };
   const handleTempData = () => {
-    if (dataValue.temp > 31) {
+    if (dataValue.temp > 32) {
       tempBox.push(dataValue.temp);
     } else {
       console.log("NO Hand");
@@ -94,14 +83,34 @@ const LivePage = () => {
     avgTemp =
       tempBox.reduce((sum, curr) => sum + Number(curr), 0) / tempBox.length;
   };
-  const handleSaveData = () => {
+  const handleHeartData = () => {
+    if (dataValue?.heart > 50) {
+      heartBox.push(dataValue?.heart);
+    } else {
+      console.log("NO Hand");
+    }
+    avgHeart =
+      heartBox.reduce((sum, curr) => sum + Number(curr), 0) / heartBox.length;
+  };
+  const handleHbData = () => {
+    if (dataValue?.hb > 2) {
+      hbBox.push(dataValue?.hb);
+    } else {
+      console.log("NO Hand");
+    }
+    avgHb = hbBox.reduce((sum, curr) => sum + Number(curr), 0) / hbBox.length;
+  };
+  const handleSaveData = async () => {
     try {
-      addDoc(collection(db, "sensor"), {
+      await addDoc(collection(db, "sensor"), {
         email: userFilter.data.email,
         RFID: userFilter.data.RFID,
+        date: new Date(),
         temp: avgTemp,
         oxygen: avgOxygen,
         glucose: avgGlucose,
+        heart: avgHeart,
+        hb: avgHb,
       });
       firebase.database().ref("/medical/").update({
         oxygen: 0,
@@ -112,6 +121,15 @@ const LivePage = () => {
       firebase.database().ref("/medical/").update({
         glucose: 0,
       });
+
+      firebase.database().ref("/medical/").update({
+        heart: 0,
+      });
+
+      firebase.database().ref("/medical/").update({
+        hb: 0,
+      });
+
       firebase.database().ref("/medical/").update({
         card: "",
       });
@@ -123,6 +141,8 @@ const LivePage = () => {
   handleOxygenData();
   handleTempData();
   handleGlucoseData();
+  handleHeartData();
+  handleHbData();
   return (
     <div className="container">
       {!rfidFilter && (
@@ -140,19 +160,19 @@ const LivePage = () => {
           <div className="col-md-12 ">
             <div className="row">
               <div className="col-md-12">
-                <div class="card text-center">
-                  <div class="card-header"></div>
-                  <div class="card-body">
-                    <h5 class="card-title">
+                <div className="card text-center">
+                  <div className="card-header"></div>
+                  <div className="card-body">
+                    <h5 className="card-title">
                       {userFilter?.data.firstName} {userFilter?.data.last_name}
                     </h5>
-                    <p class="card-text">
+                    <p className="card-text">
                       Email : {userFilter?.data.email} RFID :{" "}
                       {userFilter?.data.RFID}
                     </p>
-                    <p class="card-text"></p>
+                    <p className="card-text"></p>
                   </div>
-                  <div class="card-footer text-muted">
+                  <div className="card-footer text-muted">
                     {dateValue.toLocaleDateString("eng")}
                   </div>
                 </div>
@@ -161,53 +181,53 @@ const LivePage = () => {
             <div className="row">
               <div className="box_container_data">
                 <div
-                  class="card text-primary  border-primary  mb-3 m-5"
+                  className="card text-primary  border-primary  mb-3 m-5"
                   style={{ width: "300px" }}
                 >
-                  <div class="card-header text-center">Device Data</div>
-                  <div class="card-body text-primary  text-center">
-                    <h5 class="card-title">Heart Rate</h5>
-                    <p class="card-text">{dataValue?.heart}</p>
+                  <div className="card-header text-center">Device Data</div>
+                  <div className="card-body text-primary  text-center">
+                    <h5 className="card-title">Heart Rate</h5>
+                    <p className="card-text">{dataValue?.heart}</p>
                   </div>
                 </div>
                 <div
-                  class="card text-primary  border-primary  mb-3 m-5"
+                  className="card text-primary  border-primary  mb-3 m-5"
                   style={{ width: "300px" }}
                 >
-                  <div class="card-header text-center">Device Data</div>
-                  <div class="card-body text-primary  text-center">
-                    <h5 class="card-title">Sp02</h5>
-                    <p class="card-text">{dataValue?.oxygen} </p>
+                  <div className="card-header text-center">Device Data</div>
+                  <div className="card-body text-primary  text-center">
+                    <h5 className="card-title">Sp02</h5>
+                    <p className="card-text">{dataValue?.oxygen} </p>
                   </div>
                 </div>
                 <div
-                  class="card text-primary  border-primary  mb-3 m-5"
+                  className="card text-primary  border-primary  mb-3 m-5"
                   style={{ width: "300px" }}
                 >
-                  <div class="card-header text-center">Device Data</div>
-                  <div class="card-body text-primary  text-center">
-                    <h5 class="card-title">Temperature</h5>
-                    <p class="card-text">{dataValue?.temp}C</p>
+                  <div className="card-header text-center">Device Data</div>
+                  <div className="card-body text-primary  text-center">
+                    <h5 className="card-title">Temperature</h5>
+                    <p className="card-text">{dataValue?.temp}C</p>
                   </div>
                 </div>
                 <div
-                  class="card text-primary  border-primary  mb-3 m-5"
+                  className="card text-primary  border-primary  mb-3 m-5"
                   style={{ width: "300px" }}
                 >
-                  <div class="card-header text-center">Device Data</div>
-                  <div class="card-body text-primary  text-center">
-                    <h5 class="card-title">Hb</h5>
-                    <p class="card-text">{dataValue?.pressure}</p>
+                  <div className="card-header text-center">Device Data</div>
+                  <div className="card-body text-primary  text-center">
+                    <h5 className="card-title">Hb</h5>
+                    <p className="card-text">{dataValue?.hb}</p>
                   </div>
                 </div>
                 <div
-                  class="card text-primary  border-primary  mb-3 m-5"
+                  className="card text-primary  border-primary  mb-3 m-5"
                   style={{ width: "300px" }}
                 >
-                  <div class="card-header text-center">Device Data</div>
-                  <div class="card-body text-primary  text-center">
-                    <h5 class="card-title">Glucose</h5>
-                    <p class="card-text">{dataValue?.glucose}</p>
+                  <div className="card-header text-center">Device Data</div>
+                  <div className="card-body text-primary  text-center">
+                    <h5 className="card-title">Glucose</h5>
+                    <p className="card-text">{dataValue?.glucose}</p>
                   </div>
                 </div>
               </div>
@@ -225,11 +245,11 @@ const LivePage = () => {
                     </thead>
                     <tbody>
                       <tr className="table-primary">
-                        <td>{}</td>
-                        <td>{avgOxygen}</td>
-                        <td>{avgTemp}</td>
-                        <td>{}</td>
-                        <td>{avgGlucose}</td>
+                        <td>{avgHeart.toFixed(2)}</td>
+                        <td>{avgOxygen.toFixed(2)}</td>
+                        <td>{avgTemp.toFixed(2)}</td>
+                        <td>{avgHb.toFixed(2)}</td>
+                        <td>{avgGlucose.toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -238,17 +258,17 @@ const LivePage = () => {
               <div className="row">
                 <div className="col-md-12 d-flex justify-content-center mt-5">
                   <div
-                    class="card text-primary  border-primary  mb-3"
+                    className="card text-primary  border-primary  mb-3"
                     style={{ width: "200px" }}
                   >
-                    <div class="card-header text-center">
+                    <div className="card-header text-center">
                       Control Device Data
                     </div>
-                    <div class="card-body text-primary ">
-                      <p class="card-text text-center">
+                    <div className="card-body text-primary ">
+                      <p className="card-text text-center">
                         <button
                           type="button"
-                          class="btn btn-outline-success me-2 text-primary"
+                          className="btn btn-outline-success me-2 text-primary"
                           onClick={handleSaveData}
                         >
                           SAVE DATA SERVER
