@@ -42,10 +42,13 @@ const LoginPage = () => {
     <div className="container " id="login">
       <div className="row d-flex justify-content-center">
         <div className="col-6 ">
-          <h2 className="text-uppercase text-center"> Log in</h2>
+          <h2 className="text-uppercase text-center mt-5 text-white">
+            {" "}
+            Log in
+          </h2>
           <form id="login" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label>
+              <label className="text-white">
                 Your Email<span className="req">*</span>{" "}
               </label>
               <input
@@ -61,7 +64,7 @@ const LoginPage = () => {
               <p className="help-block text-danger"></p>
             </div>
             <div className="form-group">
-              <label>
+              <label className="text-white">
                 Password<span className="req">*</span>
               </label>
               <input
@@ -76,14 +79,14 @@ const LoginPage = () => {
               />
               <p className="help-block text-danger"></p>
             </div>
-            <div className="mrgn-30-top d-flex justify-content-between">
+            <div className="mrgn-30-top d-flex justify-content-between mb-5">
               <button
                 type="submit"
                 className="btn btn-larger btn-block bg-primary text-white"
               >
                 Log in
               </button>
-              <p>
+              <p className="text-white">
                 Create New Account <Link to="/signup">Sign Up</Link>
               </p>
             </div>

@@ -1,19 +1,16 @@
 import React from "react";
-import Slide from "./Slide";
 
 const Home = () => {
   return (
     <div>
       <div className="row">
         <div className="col-md-12">
-          <Slide />
+          <h1 className="text-center text-white mt-5">Medical Website</h1>
         </div>
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-md-12">
-            <h1>Hello home</h1>
-          </div>
+          <div className="col-md-12"></div>
         </div>
       </div>
     </div>

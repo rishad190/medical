@@ -54,7 +54,7 @@ const SignupPage = () => {
                     <div className="row">
                       <div className="col-xs-12 col-sm-6">
                         <div className="form-group">
-                          <label>
+                          <label className="text-white">
                             First Name<span className="req">*</span>
                           </label>
                           <input
@@ -72,7 +72,7 @@ const SignupPage = () => {
                       </div>
                       <div className="col-xs-12 col-sm-6">
                         <div className="form-group">
-                          <label>
+                          <label className="text-white">
                             Last Name<span className="req">*</span>
                           </label>
                           <input
@@ -90,7 +90,7 @@ const SignupPage = () => {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         Your Email<span className="req">*</span>{" "}
                       </label>
                       <input
@@ -106,7 +106,7 @@ const SignupPage = () => {
                       <p className="help-block text-danger"></p>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         Your Phone<span className="req">*</span>{" "}
                       </label>
                       <input
@@ -122,7 +122,7 @@ const SignupPage = () => {
                       <p className="help-block text-danger"></p>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         Your Address<span className="req">*</span>{" "}
                       </label>
                       <input
@@ -138,7 +138,7 @@ const SignupPage = () => {
                       <p className="help-block text-danger"></p>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         Age<span className="req">*</span>{" "}
                       </label>
                       <input
@@ -154,7 +154,7 @@ const SignupPage = () => {
                       <p className="help-block text-danger"></p>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         Weight<span className="req">*</span>{" "}
                       </label>
                       <input
@@ -170,7 +170,7 @@ const SignupPage = () => {
                       <p className="help-block text-danger"></p>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         Room No<span className="req">*</span>{" "}
                       </label>
                       <input
@@ -186,7 +186,7 @@ const SignupPage = () => {
                       <p className="help-block text-danger"></p>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         RFID Number<span className="req">*</span>{" "}
                       </label>
                       <input
@@ -202,7 +202,7 @@ const SignupPage = () => {
                       <p className="help-block text-danger"></p>
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="text-white">
                         Password<span className="req">*</span>{" "}
                       </label>
                       <input
