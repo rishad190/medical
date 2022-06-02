@@ -8,7 +8,7 @@ const LoginPage = () => {
   const [user, setUser] = useContext(UserContext);
   const history = useNavigate();
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
+  const { from } = location.state || { from: { pathname: "/dashboard" } };
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     if (data.email && data.password) {
@@ -41,7 +41,7 @@ const LoginPage = () => {
   return (
     <div className="container " id="login">
       <div className="row d-flex justify-content-center">
-        <div className="col-6 ">
+        <div className="col-md-6 col-sm-12">
           <h2 className="text-uppercase text-center mt-5 text-white">
             {" "}
             Log in

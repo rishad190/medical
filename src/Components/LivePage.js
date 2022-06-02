@@ -75,7 +75,7 @@ const LivePage = () => {
       glucoseBox.length;
   };
   const handleTempData = () => {
-    if (dataValue.temp > 32) {
+    if (dataValue.temp > 31) {
       tempBox.push(dataValue.temp);
     } else {
       console.log("NO Hand");
@@ -230,6 +230,16 @@ const LivePage = () => {
                     <p className="card-text">{dataValue?.glucose}</p>
                   </div>
                 </div>
+                <div
+                  className="card text-primary  border-primary  mb-3 m-5"
+                  style={{ width: "300px" }}
+                >
+                  <div className="card-header text-center">Device Data</div>
+                  <div className="card-body text-primary  text-center">
+                    <h5 className="card-title">Pressure</h5>
+                    <p className="card-text">{dataValue?.pressure}</p>
+                  </div>
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-12">
@@ -239,8 +249,9 @@ const LivePage = () => {
                         <th scope="col">Heart Rate</th>
                         <th scope="col">Spo2</th>
                         <th scope="col">Temperature</th>
-                        <th scope="col"> Hb</th>
-                        <th scope="col"> Glucose</th>
+                        <th scope="col">Hb</th>
+                        <th scope="col">Glucose</th>
+                        <th scope="col">Pressure</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -249,6 +260,7 @@ const LivePage = () => {
                         <td>{avgOxygen.toFixed(2)}</td>
                         <td>{avgTemp.toFixed(2)}</td>
                         <td>{avgHb.toFixed(2)}</td>
+                        <td>{avgGlucose.toFixed(2)}</td>
                         <td>{avgGlucose.toFixed(2)}</td>
                       </tr>
                     </tbody>

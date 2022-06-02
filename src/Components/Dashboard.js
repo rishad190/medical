@@ -36,7 +36,7 @@ const Dashboard = () => {
   return (
     <div className="container">
       <div className="row gutters-sm">
-        <div className="col-md-4 mb-3">
+        <div className="col-md-4 mb-3 mt-5">
           <div className="cardBox">
             <div className="cardBox-body">
               <div className="d-flex flex-column align-items-center text-center">
@@ -48,16 +48,22 @@ const Dashboard = () => {
                 />
                 <div className="mt-3">
                   <h4>Name</h4>
-                  <p className="text-secondary mb-1">Patient</p>
-                  <p className="text-muted font-size-sm">Address</p>
-                  <button className="btn btn-primary">Follow</button>
+                  <p className="text-secondary mb-1">
+                    {" "}
+                    {dataFilter[0]?.data?.firstName} {""}
+                    {dataFilter[0]?.data?.last_name}
+                  </p>
+                  <p className="text-muted font-size-sm">
+                    {dataFilter[0]?.data?.address}
+                  </p>
+                  <button className="btn btn-primary me-2">Follow</button>
                   <button className="btn btn-outline-primary">Message</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-8 mt-5">
           <div className="cardBox mb-3">
             <div className="row">
               <div className="col-sm-3">
@@ -144,7 +150,7 @@ const Dashboard = () => {
           {/* table */}
 
           <div className="row ">
-            <div className="col-md-12 col-sm-12 text-center">
+            <div className="col-md-12 col-sm-12 text-center text-white">
               <h3>Result</h3>
               <table className="table table-dark table-striped">
                 <thead>
@@ -162,7 +168,7 @@ const Dashboard = () => {
                   {sensorFilter?.map((sensor, i) => (
                     <tr key={sensor.id}>
                       <th scope="row">{i + 1}</th>
-                      <td>{sensor?.data.date.toDate().toLocaleDateString()}</td>
+                      <td>{sensor?.data.date.toDate().toLocaleString()}</td>
                       <td>{sensor?.data.oxygen.toFixed(2)}</td>
                       <td>{sensor?.data.temp.toFixed(2)}</td>
                       <td>{sensor?.data.glucose.toFixed(2)}</td>
